@@ -56,5 +56,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnConnectionError" />
+
+        <Button
+            android:text="Send ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSendID" />
     </LinearLayout>
 </RelativeLayout>

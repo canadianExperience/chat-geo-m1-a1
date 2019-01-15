@@ -12,7 +12,7 @@ import android.util.Log;
 import com.zv.geochat.notification.NotificationDecorator;
 
 public class ChatService extends Service {
-    private static final String TAG = "ChatService";
+    private static final String TAG = "Tag:ChatService";
 
     public static final String MSG_CMD = "msg_cmd";
     public static final int CMD_JOIN_CHAT = 10;
@@ -22,6 +22,7 @@ public class ChatService extends Service {
 
     //*
     public static final int CMD_CONNECTION_ERROR = 50;
+    public static final int CMD_SEND_ID = 60;
 
     public static final String KEY_MESSAGE_TEXT = "message_text";
     public static final String KEY_USER_NAME = "user_name";
@@ -104,11 +105,17 @@ public class ChatService extends Service {
             //*
         } else if (command == CMD_CONNECTION_ERROR) {
            // String testUser = "User2";
-            String testMessage = "Connection Error";
-            notificationDecorator.displaySimpleNotification("Connection error...", testMessage);
+            String messageText = (String) data.get(KEY_MESSAGE_TEXT);
+           // String testMessage = "Connection error";
+            notificationDecorator.displaySimpleNotification("Connection Error" + ": " + messageText, "");
+        } else if (command == CMD_SEND_ID) {
+            // String testUser = "User2";
+            String messageText = (String) data.get(KEY_MESSAGE_TEXT);
+           // String testMessage = "Send ID";
+            notificationDecorator.displaySimpleNotification("Received Data" + ": " + messageText, "");
 
 
-        } else {
+        }else {
             Log.w(TAG, "Ignoring Unknown Command! id=" + command);
         }
     }
