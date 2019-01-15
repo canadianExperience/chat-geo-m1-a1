@@ -66,6 +66,18 @@ public class ChatActivityFragment extends Fragment {
             }
         });
 
+        //*
+
+        Button btnConnectionError = (Button) v.findViewById(R.id.btnConnectionError);
+        btnConnectionError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Connection Error...", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                simulateOnMessage();
+            }
+        });
+
         edtMessage = (EditText) v.findViewById(R.id.edtMessage);
 
         loadUserNameFromPreferences();
@@ -111,5 +123,15 @@ public class ChatActivityFragment extends Fragment {
         intent.putExtras(data);
         getActivity().startService(intent);
     }
+
+    //*
+
+//    private void simulateOnMessage(){
+//        Bundle data = new Bundle();
+//        data.putInt(ChatService.MSG_CMD, ChatService.CMD_RECEIVE_MESSAGE);
+//        Intent intent = new Intent(getContext(), ChatService.class);
+//        intent.putExtras(data);
+//        getActivity().startService(intent);
+//    }
 
 }

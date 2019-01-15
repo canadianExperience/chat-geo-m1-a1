@@ -19,6 +19,10 @@ public class ChatService extends Service {
     public static final int CMD_LEAVE_CHAT = 20;
     public static final int CMD_SEND_MESSAGE = 30;
     public static final int CMD_RECEIVE_MESSAGE = 40;
+
+    //*
+    public static final int CMD_CONNECTION_ERROR = 50;
+
     public static final String KEY_MESSAGE_TEXT = "message_text";
     public static final String KEY_USER_NAME = "user_name";
 
@@ -96,6 +100,14 @@ public class ChatService extends Service {
             String testUser = "User2";
             String testMessage = "Simulated Message";
             notificationDecorator.displaySimpleNotification("New message...: "+ testUser, testMessage);
+
+            //*
+        } else if (command == CMD_CONNECTION_ERROR) {
+           // String testUser = "User2";
+            String testMessage = "Connection Error";
+            notificationDecorator.displaySimpleNotification("Connection error...", testMessage);
+
+
         } else {
             Log.w(TAG, "Ignoring Unknown Command! id=" + command);
         }
