@@ -1,12 +1,12 @@
 package com.zv.geochat.service;
 
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.zv.geochat.notification.NotificationDecorator;
@@ -19,15 +19,14 @@ public class ChatService extends Service {
     public static final int CMD_LEAVE_CHAT = 20;
     public static final int CMD_SEND_MESSAGE = 30;
     public static final int CMD_RECEIVE_MESSAGE = 40;
-
-    //*
     public static final int CMD_CONNECTION_ERROR = 50;
     public static final int CMD_SEND_ID = 60;
 
     public static final String KEY_MESSAGE_TEXT = "message_text";
     public static final String KEY_USER_NAME = "user_name";
 
-    private NotificationManager notificationMgr;
+  //private NotificationManager notificationMgr;
+    private NotificationManagerCompat notificationMgr;
     private PowerManager.WakeLock wakeLock;
     private NotificationDecorator notificationDecorator;
 
@@ -38,7 +37,8 @@ public class ChatService extends Service {
     public void onCreate() {
         Log.v(TAG, "onCreate()");
         super.onCreate();
-        notificationMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationMgr = NotificationManagerCompat.from(this);
+        //notificationMgr = (NotificationManagerCompat) getSystemService(NOTIFICATION_SERVICE);
         notificationDecorator = new NotificationDecorator(this, notificationMgr);
 
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
@@ -84,7 +84,6 @@ public class ChatService extends Service {
         }
     }
 
-
     private void handleData(Bundle data) {
         int command = data.getInt(MSG_CMD);
         Log.d(TAG, "-(<- received command data to service: command=" + command);
@@ -101,20 +100,12 @@ public class ChatService extends Service {
             String testUser = "User2";
             String testMessage = "Simulated Message";
             notificationDecorator.displaySimpleNotification("New message...: "+ testUser, testMessage);
-
-            //*
         } else if (command == CMD_CONNECTION_ERROR) {
-           // String testUser = "User2";
             String messageText = (String) data.get(KEY_MESSAGE_TEXT);
-           // String testMessage = "Connection error";
             notificationDecorator.displaySimpleNotification("Connection Error" + ": " + messageText, "");
         } else if (command == CMD_SEND_ID) {
-            // String testUser = "User2";
             String messageText = (String) data.get(KEY_MESSAGE_TEXT);
-           // String testMessage = "Send ID";
             notificationDecorator.displaySimpleNotification("Received Data" + ": " + messageText, "");
-
-
         }else {
             Log.w(TAG, "Ignoring Unknown Command! id=" + command);
         }

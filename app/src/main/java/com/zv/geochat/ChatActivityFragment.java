@@ -136,8 +136,6 @@ public class ChatActivityFragment extends Fragment {
         getActivity().startService(intent);
     }
 
-    //*
-
     private void connectionError(String messageText){
         Bundle data = new Bundle();
         data.putInt(ChatService.MSG_CMD, ChatService.CMD_CONNECTION_ERROR);
@@ -158,5 +156,4 @@ public class ChatActivityFragment extends Fragment {
         intent.putExtras(data);
         getActivity().startService(intent);
     }
-
 }
